@@ -21,6 +21,7 @@ if ($handle) {
 
 define('APP_PATH', __DIR__ . '/../' . PATH_APP);
 define('FW_PATH', __DIR__ . '/../' . PATH_FW);
+define('LOG_PATH', __DIR__ . '/../' . PATH_LOG);
 
 $dirs = array(
 	APP_PATH . 'main/',
