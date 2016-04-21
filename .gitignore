@@ -1,0 +1,17 @@
+# Project
+.env
+/files/
+
+# General
+*.tmp
+*.metadata
+tmp/
+bin/
+*.bak
+
+# PhpStorm
+.idea/
+*.iml
+*.iws
+.idea_modules/
+/out/

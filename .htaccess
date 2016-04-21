@@ -1,0 +1,8 @@
+RewriteEngine on
+RewriteBase /
+
+DirectorySlash Off
+RewriteCond %{REQUEST_URI} !\.(jpg|png|gif|jpeg|css|js|ico)$
+RewriteCond %{REQUEST_URI} !/robots.txt$
+RewriteCond %{REQUEST_URI} !/index.php$
+RewriteRule ^([^?]*)$ /index.php?path=$1 [NC,L,QSA]
