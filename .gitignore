@@ -1,6 +1,7 @@
 # Project
 .env
 /files/
+/logs/
 
 # General
 *.tmp

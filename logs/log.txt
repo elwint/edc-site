@@ -9,3 +9,4 @@
 [ERROR - 2016-04-19 18:39:40] Fatal error: Static view 'full_pages/404.html' does not exist (class 'NormalPage' function 'show)
 [ERROR - 2016-04-19 18:40:20] Fatal error: Static view 'maintenance.html' does not exist (class '' function 'require_once)
 [ERROR - 2016-04-19 18:42:27] Fatal error: Static view 'error_pages/404.html' does not exist (class 'Route' function 'getRoute)
+[ERROR - 2016-04-21 21:02:47] Fatal error: Connection error: SQLSTATE[HY000] [2003] Can't connect to MySQL server on '127.0.0.1' (10061) (class 'Database' function '__construct').
