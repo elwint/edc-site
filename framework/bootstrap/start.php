@@ -15,11 +15,9 @@ if (MAINTENANCE_MODE == "1") {
 // require the routes
 require_once(APP_PATH . 'routes.php');
 
-// Start log
-new Log();
-
 // Load our required classes
-new Session();
+Log::init();
+Session::init();
 
 // Load the router
 Route::getRoute();

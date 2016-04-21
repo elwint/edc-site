@@ -12,7 +12,7 @@ class Response {
      * Redirect to the given URL, either by headers or by javascript/html
      *
      */
-    public function redirect($url) {
+    public static function redirect($url) {
         if(!headers_sent()) {
             header('Location: '.$url);
             die();
@@ -26,7 +26,7 @@ class Response {
     /**
      * JSON response to the browser, helpful for APIs
      */
-    public function json($data) {
+    public static function json($data) {
         echo json_encode($data);
     }
 
@@ -34,7 +34,7 @@ class Response {
      * Shorthand response function to generate a view.
      *
      */
-    public function view($path, $data) {
+    public static function view($path, $data) {
         $view = new View;
         $view->set('data', $data);
         $view->make($path);

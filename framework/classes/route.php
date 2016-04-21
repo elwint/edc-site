@@ -6,14 +6,14 @@ class Route {
      * Set a prefix for the route
      *
      */
-    public function prefix($preview) {
+    public static function prefix($preview) {
         $GLOBALS['routeprefix'] = $preview;
     }
     /**
      * Register a get type route
      *
      */
-    public function get($route, $controller) {
+    public static function get($route, $controller) {
         Route::generate($route, $controller, 'GET');
     }
 
@@ -21,7 +21,7 @@ class Route {
      * Register a post type route
      *
      */
-    public function post($route, $controller) {
+    public static function post($route, $controller) {
         Route::generate($route, $controller, 'POST');
     }
 
@@ -29,7 +29,7 @@ class Route {
      * Register a delete type route
      *
      */
-    public function delete($route, $controller) {
+    public static function delete($route, $controller) {
         Route::generate($route, $controller, 'DELETE');
     }
 
@@ -37,7 +37,7 @@ class Route {
      * Register a put type route
      *
      */
-    public function put($route, $controller) {
+    public static function put($route, $controller) {
         Route::generate($route, $controller, 'PUT');
     }
 
@@ -45,7 +45,7 @@ class Route {
      * Add the route to the route group
      *
      */
-    private function generate($route, $controller, $type) {
+    private static function generate($route, $controller, $type) {
         $insert = array();
 		if ($route == '/' || $route == '') {
 			$insert['request'] = array_values(array(''));
@@ -66,7 +66,7 @@ class Route {
      * Find our route
      *
      */
-    public function getRoute() {
+    public static function getRoute() {
         // default values
 		$request_uri=strtok($_SERVER["REQUEST_URI"],'?');
 		if ($request_uri == '/') {
@@ -114,7 +114,7 @@ class Route {
         // no route has been found, show 404 page
         if($error) {
 			View::init('partials/header', 'partials/footer')->set('username', Session::get('username'))
-			->makeStatic('404.html');
+			    ->makeStatic('404.html');
             die();
         }
 
