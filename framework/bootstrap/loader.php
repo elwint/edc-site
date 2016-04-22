@@ -4,6 +4,8 @@
  * Models and Controllers are (temporary?) in the same class
  */
 
+define('__DIR__', dirname(dirname(__FILE__)));
+
 $handle = fopen("__DIR__ . '/../.env", "r");
 if ($handle) {
 	while (($line = fgets($handle)) !== false) {
