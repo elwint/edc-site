@@ -34,7 +34,11 @@
 			<h3>Results</h3>
 			<p>None</p>
 	</div>
+	<a href="maniaplanet:///maniaflash.maniaplanet.com//channel/?channelId=edcuporganizing" class="side_img">
+		<img class="bottom" src="/images/maniaflash.png" alt="ManiaFlash">
+		<img class="top" src="/images/server_offline.png" alt="Server">
+	</a>
+	<!-- <a href="maniaplanet:///#join=edcserver" class="side_img"><img src="/images/server_online.png" alt="Server"></a> -->
 	<a href="https://www.facebook.com/edcuporganizing" class="side_img" target="_blank"><img src="/images/facebook.png" alt="Facebook"></a>
-	<a href="maniaplanet:///178.33.248.146//maniaflash//channel/?channelId=edcuporganizing" class="side_img"><img src="/images/maniaflash.png" alt="ManiaFlash"></a>
 	<a href="https://www.youtube.com/channel/UCdNKUbGOxw68lph_UOVTWug" class="side_img" target="_blank"><img src="/images/youtube.png" alt="YouTube"></a>
 </div>
