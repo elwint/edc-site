@@ -16,3 +16,7 @@ bin/
 *.iws
 .idea_modules/
 /out/
+
+# Git-ftp
+git-ftp.py
+.gitftpignore
