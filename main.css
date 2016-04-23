@@ -114,6 +114,48 @@ h5#logo span { color:#333; font:bold 10px/16px 'Open Sans', sans-serif; text-tra
 	padding-bottom: 4px;
 }
 
+.module_cup {
+	border:1px solid #d3d3d3;
+	border-bottom:1px solid #a5a5a5;
+	border-right:1px solid #b6b6b6;
+	border-radius:6px;
+	background:#f9f9f9 url(images/slider_bg.gif) left top repeat-x;
+	padding:9px 9px 9px 10px;
+	margin-bottom:20px;
+	overflow: hidden;
+	opacity: 0.6;
+	-webkit-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+}
+
+.module_cup:hover {
+	opacity: 1.0;
+}
+
+.module_cup .wrapper {
+	float:left;
+	position:relative;
+}
+
+.module_cup .desc {
+	pointer-events: none;
+	position:absolute; /* absolute position (so we can position it where we want)*/
+	top:0; /* position will be on bottom */
+	left:0;
+	width:100%;
+	/* styling bellow */
+	background: rgba(0, 0, 0, 0.6);
+	font-weight: bold;
+	font-size:20px;
+	color:white;
+}
+
+.module_cup .desc p {
+	text-align: center;
+	padding:20px;
+	margin:0;
+}
+
 .module_slider {
 	border:1px solid #d3d3d3;
 	border-bottom:1px solid #a5a5a5;

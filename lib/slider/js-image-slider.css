@@ -28,9 +28,6 @@
 	top:0px;left:0px;border:0;padding:0;margin:0;
 	width:100%;height:100%;
 }
-#slider .video {
-	background:transparent url(video.png) no-repeat 50% 50%;
-}
 
 /* Caption styles */
 #slider div.mc-caption-bg, #slider div.mc-caption-bg2 {
@@ -46,26 +43,25 @@
 }
 #slider div.mc-caption-bg 
 {
+	pointer-events: none;
     /* NOTE: Its opacity is to be set through the sliderOptions.captionOpacity setting in the js-image-slider.js file.*/
 	background:Black;/* or any other colors such as White, or: background:none; */
 }
 #slider div.mc-caption-bg2 {
+	pointer-events: none;
     background:none;
 }
 #slider div.mc-caption {
-	font: bold 14px/20px Arial;
+	pointer-events: none;
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 20px;
+	letter-spacing: 1px;
 	color:#EEE;
 	z-index:4;
 	text-align:center;
     background:none;
 }
-#slider div.mc-caption a {
-	color:#FB0;
-}
-#slider div.mc-caption a:hover {
-	color:#DA0;
-}
-
 
 /* ------ built-in navigation bullets wrapper ------*/
 /* Note: check themes\2\js-image-slider.css to see how to hide nav bullets */

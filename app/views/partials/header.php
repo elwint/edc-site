@@ -74,7 +74,7 @@
 					<a href="/">Home</a>
 				</li>
 				<li>
-					<a href="#">Cups</a>
+					<a href="/cups">Cups</a>
 				</li>
 				<li>
 					<a href="#">Donate</a>
