@@ -75,4 +75,9 @@ class View
 					Log::makeException("View '<b>{$this->footer}</b>' does not exist", $error_debug[1]['class'], $error_debug[1]['function']);
 	}
 
+	public static function makeMod($viewMod) {
+		$error_debug = debug_backtrace();
+		if (! @include(APP_PATH . 'views/' . $viewMod . '.php'))
+			Log::makeException("View '<b>{$viewMod}</b>' does not exist", $error_debug[1]['class'], $error_debug[1]['function']);
+	}
 }
