@@ -11,6 +11,7 @@
 	<script src="/lib/slider/js-image-slider.js" type="text/javascript"></script>
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <body>
+<?php if (empty($this->username)) { ?>
 	<div class="popup-wrapper" id="loginpopup">
 		<div class="login-form">
 			<div class="form-group log-status">
@@ -54,6 +55,7 @@
 			<a class="popup-close" href="#closed">X</a>
 		</div>
 	</div>
+<?php } ?>
 	<div id="header">
 		<div class="logoheader"> 
 			<h5 id="logo">
@@ -63,10 +65,12 @@
 		<div class="menuheader">
 			<div class="search-container">
 				<input class="search" id="searchbox" type="search" placeholder="Search">
-				<a onclick="document.getElementById('searchbox').focus();" class="searchbutton">🔍</a>
+				<a onclick="document.getElementById('searchbox').focus();" class="searchbutton"><div style="-webkit-transform: rotate(-45deg); -moz-transform: rotate(-45deg); -o-transform: rotate(-45deg); -ms-transform: rotate(-45deg);">&#9906;</div></a>
 			</div>
+			<?php if (empty($this->username)) { ?>
 			<a href="#loginpopup" class="loginbutton">Log In</a>
 			<a href="#registerpopup" class="loginbutton">Register</a>
+			<?php } ?>
 		</div>
 		<div id="topmenu">
 			<ul id="nav_top">
