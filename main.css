@@ -260,6 +260,7 @@ h5#logo span { color:#333; font:bold 10px/16px 'Open Sans', sans-serif; text-tra
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     cursor: pointer;
+	vertical-align: bottom;
 }
 
 .loginbutton:hover {

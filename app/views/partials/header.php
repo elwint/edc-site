@@ -2,7 +2,7 @@
 <html>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="theme-color" content="#222222">
-	<title><?php echo htmlspecialchars($this->title, ENT_QUOTES); ?></title>
+	<title><?php $this->pr('title'); ?></title>
 	<link rel="shortcut icon" href="/favicon.ico?v=2">
 	<link rel="stylesheet" href="/main.css" type="text/css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" type="text/css">
@@ -11,7 +11,7 @@
 	<script src="/lib/slider/js-image-slider.js" type="text/javascript"></script>
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <body>
-<?php if (empty($this->username)) { ?>
+<?php if ($this->isEmpty($this->username)) { ?>
 	<div class="popup-wrapper" id="loginpopup">
 		<div class="login-form">
 			<div class="form-group log-status">
@@ -67,9 +67,12 @@
 				<input class="search" id="searchbox" type="search" placeholder="Search">
 				<a onclick="document.getElementById('searchbox').focus();" class="searchbutton"><div style="-webkit-transform: rotate(-45deg); -moz-transform: rotate(-45deg); -o-transform: rotate(-45deg); -ms-transform: rotate(-45deg);">&#9906;</div></a>
 			</div>
-			<?php if (empty($this->username)) { ?>
+			<?php if ($this->isEmpty($this->username)) { ?>
 			<a href="#loginpopup" class="loginbutton">Log In</a>
 			<a href="#registerpopup" class="loginbutton">Register</a>
+			<?php } else { ?>
+			<a href="/account" class="loginbutton"><?php $this->pr('username'); ?></a>
+			<a href="/logout" class="loginbutton">Log Out</a>
 			<?php } ?>
 		</div>
 		<div id="topmenu">

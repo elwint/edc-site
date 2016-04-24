@@ -18,9 +18,9 @@
 </div>
 <div id="right">
 	<?php
-		View::makeMod('side_mods/news');
-		View::makeMod('side_mods/matches');
-		View::makeMod('side_mods/results');
-		View::makeMod('side_mods/banners');
+		$this->makeMod('side_mods/news');
+		$this->makeMod('side_mods/matches');
+		$this->makeMod('side_mods/results');
+		$this->makeMod('side_mods/banners');
 	?>
 </div>
