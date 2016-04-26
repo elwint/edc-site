@@ -7,44 +7,44 @@
 
 class View
 {
-    protected $vars = array();
-    protected $header = null;
-    protected $footer = null;
+	protected $vars = array();
+	protected $header = null;
+	protected $footer = null;
 
-    /**
-     * Initiate a view incase the we want to call it use 'View::' so we can use method chaining
-     *
-     */
-    public static function init($header = null, $footer = null) {
-        $view = new View;
-        $view->header = $header;
-        $view->footer = $footer;
-        return $view;
-    }
+	/**
+	 * Initiate a view incase the we want to call it use 'View::' so we can use method chaining
+	 *
+	 */
+	public static function init($header = null, $footer = null) {
+		$view = new View;
+		$view->header = $header;
+		$view->footer = $footer;
+		return $view;
+	}
 
 
-    /**
-     * Non-existing property is being called, let's check if it has been set in our data array
-     */
-    public function __get($name) {
-        if (array_key_exists($name, $this->vars))
-            return $this->vars[$name];
+	/**
+	 * Non-existing property is being called, let's check if it has been set in our data array
+	 */
+	public function __get($name) {
+		if (array_key_exists($name, $this->vars))
+			return $this->vars[$name];
 		return false;
-    }
+	}
 
-    /**
-     * Set the given key=>value in our data array
-     */
-    public function set($key, $value) {
-        $this->vars[$key] = $value;
-        return $this;
-    }
+	/**
+	 * Set the given key=>value in our data array
+	 */
+	public function set($key, $value) {
+		$this->vars[$key] = $value;
+		return $this;
+	}
 
-    /**
-     * Include the finalized view
-     *
-     */
-    public function make($view) {
+	/**
+	 * Include the finalized view
+	 *
+	 */
+	public function make($view) {
 			$error_debug = debug_backtrace();
 
 			if($this->header != null)
@@ -57,7 +57,7 @@ class View
 			if($this->footer != null)
 				if (! @include(APP_PATH . 'views/' . $this->footer . '.php'))
 					ErrorHandler::makeError("View '<b>{$this->footer}</b>' does not exist", $error_debug[1]['class'], $error_debug[1]['function']);
-    }
+	}
 	
 	public function makeStatic($viewWithExt) {
 			$error_debug = debug_backtrace();
