@@ -19,7 +19,7 @@ class Database {
 			$this->dbh = new PDO($dsn, DB_USERNAME, DB_PASSWORD);
 			$this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 		} catch (PDOException $e) {
-			Log::makeException('Connection error: ' . $e->getMessage());
+			ErrorHandler::makeError('Connection error: ' . $e->getMessage());
 		}
 		
 		$this->dbh->exec("set names utf8");
@@ -116,6 +116,14 @@ class Database {
 	}
 
 	/*
+	 * Update by
+	 */
+	public function updateBy($table, $values, $wherevalue) {
+		$result = $this->update($table, $values, "WHERE ".key($wherevalue)."=:".key($wherevalue), $wherevalue);
+		return $result;
+	}
+
+	/*
 	 * Delete by
 	 */
 	public function deleteBy($table, $wherevalue) {
@@ -129,7 +137,8 @@ class Database {
 		try {
 			return $this->stmt->execute();
 		} catch (PDOException $e) {
-			return $e;
+			ErrorHandler::makeError('Database error: ' . $e->getMessage());
+			return null;
 		}
 	}
 

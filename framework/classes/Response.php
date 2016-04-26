@@ -14,7 +14,7 @@ class Response {
      */
     public static function redirect($url) {
         if(!headers_sent()) {
-            header('Location: '.$url);
+            header('Location: '.$url, true, 303);
             die();
         } else {
             echo '<script type="text/javascript">window.location.href="'.$url.'";</script>';

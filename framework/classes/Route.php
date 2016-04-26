@@ -9,6 +9,16 @@ class Route {
     public static function prefix($preview) {
         $GLOBALS['routeprefix'] = $preview;
     }
+
+    /**
+     * Set 404 not found controller and function
+     *
+     */
+    public static function notFound($controller, $function) {
+        $GLOBALS['404']['controller'] = $controller;
+        $GLOBALS['404']['function'] = $function;
+    }
+
     /**
      * Register a get type route
      *
@@ -113,21 +123,28 @@ class Route {
 
         // no route has been found, show 404 page
         if($error) {
-			View::init('partials/header', 'partials/footer')->set('username', Session::get('username'))
-			    ->makeStatic('404.html');
+            if (empty($GLOBALS['404']['controller'])) {
+                header("HTTP/1.0 404 Not Found");
+                echo "<h1>404 Not Found</h1>";
+                echo "The page that you have requested could not be found.";
+            } else {
+                Route::createObject($GLOBALS['404']['controller'], $GLOBALS['404']['function'], $params);
+            }
             die();
         }
 
         // hooray, route has been found lets load the controller.
         Route::createObject($match['controller'], $match['function'], $params);
     }
+    
+    
 
     /**
      * Creates a controller object based on the parameters
      *
      *
      */
-    function createObject($name, $function, $params) {
+    public static function createObject($name, $function, $params) {
         $obj = new $name;
         $obj->$function($params);
     }

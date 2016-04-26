@@ -14,8 +14,14 @@ class NormalPage extends Base {
 			->set('content', $page['content'])
 			->make('page');
 		} else {
-			View::init('partials/header', 'partials/footer')->set('username', Session::get('username'))
-			->makeStatic('404.html');
+			$this->showNotFound();
+//			View::init('partials/header', 'partials/footer')->set('username', Session::get('username'))
+//			->makeStatic('404.html');
 		}
+	}
+
+	function showNotFound() {
+		header("HTTP/1.0 404 Not Found");
+		echo '404';
 	}
 }

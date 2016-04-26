@@ -6,52 +6,81 @@
 	<link rel="shortcut icon" href="/favicon.ico?v=2">
 	<link rel="stylesheet" href="/main.css" type="text/css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" type="text/css">
-	<link rel="stylesheet" href="/lib/slider/js-image-slider.css" type="text/css">
+	<?php if ($this->isEmpty($this->username)) { ?>
 	<link rel="stylesheet" href="/lib/popup/style.css" type="text/css">
+	<?php } ?>
+	<?php if ($this->slider) { ?>
+	<link rel="stylesheet" href="/lib/slider/js-image-slider.css" type="text/css">
 	<script src="/lib/slider/js-image-slider.js" type="text/javascript"></script>
-	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<?php } ?>
+	<?php if (($this->isEmpty($this->username)) || ($this->recaptcha)) { ?>
+	<script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit" async defer></script>
+	<script type="text/javascript">
+		var CaptchaCallback = function(){
+			<?php if ($this->attempts) { ?>
+			grecaptcha.render('recaptchaLogin', {'sitekey' : '<?php echo $this->recaptchakey; ?>'});
+			<?php } ?>
+			grecaptcha.render('recaptchaRegister', {'sitekey' : '<?php echo $this->recaptchakey; ?>'});
+		};
+	</script>
+	<?php } ?>
 <body>
 <?php if ($this->isEmpty($this->username)) { ?>
 	<div class="popup-wrapper" id="loginpopup">
 		<div class="login-form">
-			<div class="form-group log-status">
-				<input type="text" class="form-control" placeholder="Username " id="UserName" required>
-			</div>
-			<div class="form-group log-status">
-				<input type="password" class="form-control" placeholder="Password" id="Password" required>
-			</div>
-			<span class="alert">Invalid Credentials</span>
-			<a class="link" href="#forgotpopup">Lost your password?</a>
-			<button type="button" class="log-btn loginbutton">Log In</button>
-			<a class="popup-close" href="#closed">X</a>
+			<form action="/login" method="post">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Username" name="Username" required>
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" placeholder="Password" name="Password" required>
+				</div>
+				<?php if ($this->attempts) { ?>
+				<div class="form-group">
+					<div id="recaptchaLogin"></div>
+				</div>
+				<?php } ?>
+				<input type="hidden" name="path" value="<?php echo strtok($_SERVER["REQUEST_URI"],'?'); ?>">
+				<?php if (!$this->isEmpty($this->poperror)) { ?>
+				<span class="alert"><?php $this->pr('poperror', 300); ?></span>
+				<?php } ?>
+				<a class="link" href="#forgotpopup">Lost your password?</a>
+				<input type="submit" class="log-btn loginbutton" value="Log In">
+				<a class="popup-close" href="#closed">X</a>
+			</form>
 		</div>
 	</div>
 	<div class="popup-wrapper" id="registerpopup">
 		<div class="login-form">
-			<div class="form-group ">
-				<input type="text" class="form-control" placeholder="Username " id="UserName" required>
-			</div>
-			<div class="form-group log-status">
-				<input type="password" class="form-control" placeholder="Password" id="Password" required>
-			</div>
-			<div class="form-group log-status">
-				<input type="text" class="form-control" placeholder="Email" id="Email" required>
-			</div>
-			<div class="form-group">
-				<div class="g-recaptcha" data-sitekey="your_site_key"></div>
-			</div>
-			<span class="alert">Invalid [Input]</span>
-			<button type="button" class="log-btn loginbutton">Register</button>
+			<form action="/register" method="post">
+				<div class="form-group ">
+					<input type="text" class="form-control" placeholder="Username" name="Username" required>
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" placeholder="Password" name="Password" required>
+				</div>
+				<div class="form-group">
+					<input type="email" class="form-control" placeholder="Email" name="Email" required>
+				</div>
+				<div class="form-group">
+					<div id="recaptchaRegister"></div>
+				</div>
+				<input type="hidden" name="path" value="<?php echo strtok($_SERVER["REQUEST_URI"],'?'); ?>">
+				<?php if (!$this->isEmpty($this->poperror)) { ?>
+				<span class="alert"><?php $this->pr('poperror', 300); ?></span>
+				<?php } ?>
+				<input type="submit" class="log-btn loginbutton" value="Register">
+			</form>
 			<a class="popup-close" href="#closed">X</a>
 		</div>
 	</div>
 	<div class="popup-wrapper" id="forgotpopup">
 		<div class="login-form">
-			<p>sdgkg</p>
-			<div class="form-group log-status">
-				<input type="email" class="form-control" placeholder="Email" id="Email" required>
+			<p>Sorry, not implemented yet.</p>
+			<div class="form-group">
+				<input type="email" class="form-control" placeholder="Email" name="Email" required>
 			</div>
-			<button type="button" class="log-btn loginbutton">R.I.P.</button>
+			<button type="button" class="log-btn loginbutton">Nope</button>
 			<a class="popup-close" href="#closed">X</a>
 		</div>
 	</div>

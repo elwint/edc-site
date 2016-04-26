@@ -25,9 +25,14 @@ class DataValidator {
 					}
 				}
 
+				// recaptcha validate
+				if($arr[0] == 'recaptcha')
+					if(!$this->verifyRecaptcha($data[$key]))
+						$error_bag[$key]['msg'] = 'Invalid reCAPTCHA input.';
+
 				// email validate
 				if($arr[0] == 'email')
-					if(isset($data[$key]) && !DataValidator::isEmail($data[$key]))
+					if(isset($data[$key]) && !$this->isEmail($data[$key]))
 						$error_bag[$key]['msg'] = $key . ' is not valid.';
 
 				// min length validate
@@ -53,5 +58,16 @@ class DataValidator {
 	 */
 	private function isEmail($val) {
 		return filter_var($val, FILTER_VALIDATE_EMAIL);
+	}
+
+	private function verifyRecaptcha($response)
+	{
+		if (empty($response)) {
+			return false;
+		}
+
+		$link = 'https://www.google.com/recaptcha/api/siteverify?secret='.RECAPTCHA_SECRET.'&response='.$response;
+		$response = json_decode(file_get_contents($link), true);
+		return isset($response['success']) && $response['success'] === true;
 	}
 }

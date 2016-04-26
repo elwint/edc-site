@@ -1,10 +1,11 @@
 <?php
 
-class Home extends Base {
+class Home extends PageBase {
 
 	function show() {
-		View::init('partials/header', 'partials/footer')->set('username', Session::get('username'))
+		$this->view
 			->set('title', 'Home')
+			->set('slider', true)
 			->make('home');
 	}
 }

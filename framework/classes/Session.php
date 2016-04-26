@@ -16,7 +16,8 @@ class Session {
 			0,//expires at end of session
 			$currentCookieParams['path'],//path
 			$currentCookieParams['domain'],//domain
-			true //secure
+			(HTTPS === "FALSE") ? false : true,//secure
+			true //HttpOnly
 		);
 	}
 

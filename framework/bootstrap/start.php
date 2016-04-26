@@ -12,12 +12,13 @@ if (MAINTENANCE_MODE == "1") {
 	die();
 }
 
+// Initiate our required classes
+Log::init();
+ErrorHandler::init();
+Session::init();
+
 // require the routes
 require_once(APP_PATH . 'routes.php');
-
-// Load our required classes
-Log::init();
-Session::init();
 
 // Load the router
 Route::getRoute();

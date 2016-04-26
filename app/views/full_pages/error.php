@@ -22,7 +22,10 @@
 	</article>
 	<?php
 		if (DEVELOPER_MODE == "1") {
-			echo "<span style='font-size: 14px;'><br><br><b>Fatal error:</b> {$this->error} (class '<b>{$this->class}</b>' function '<b>{$this->function}</b>').</span>";
+			if ($this->class == "normal")
+				echo "<span style='font-size: 14px;'><br><br>{$this->error}</span>";
+			else
+				echo "<span style='font-size: 14px;'><br><br><b>Fatal error:</b> {$this->error} (class '<b>{$this->class}</b>' function '<b>{$this->function}</b>')</span>";
 		}
 	?>
 	<p style="position: fixed; bottom: 0; width:100%; text-align: center; font-size: 10px;">Copyright &#169; 2014-<script>document.write(new Date().getFullYear())</script> EDCuporganizing</p>

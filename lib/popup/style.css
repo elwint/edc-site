@@ -2,7 +2,7 @@
 
 #loginpopup, #registerpopup, #forgotpopup {
 position: fixed;
-visibility:none;
+visibility:hidden;
 opacity: 0;
 }
 #loginpopup:target, #registerpopup:target, #forgotpopup:target {
@@ -30,7 +30,7 @@ font-size: 20px;
 text-decoration: none;
 line-height: 1;
 color:#333;
-}/
+}
 .popup-form {
 margin:10px auto;
 }
@@ -83,18 +83,6 @@ margin:10px auto;
   color: #999;
 }
 
-.log-status.wrong-entry {
-  -moz-animation: wrong-log 0.3s;
-  -webkit-animation: wrong-log 0.3s;
-  animation: wrong-log 0.3s;
-
-}
-
-.log-status.wrong-entry .form-control, .wrong-entry .form-control + .fa {
-  border-color: #ed1c24;
-  color: #ed1c24;
-}
-
 .log-btn {
   outline: none;
   background: #444444;
@@ -122,7 +110,6 @@ margin:10px auto;
 }
 
 .alert {
-  display: none;
   text-decoration: none;
   color: #f00;
   float: left;
