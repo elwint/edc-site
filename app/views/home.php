@@ -4,6 +4,7 @@
 			<div id="slider">
 				<a href="#"><img src="/files/sliderimages/track_mp1.jpg" alt="First test"></a>
 				<a href="#"><img src="/files/sliderimages/wallpaper_grass.jpg" alt="Second test"></a>
+				<a href="#"><img src="/files/sliderimages/fb_cover.jpg" alt="Third test"></a>
 			</div>
 		</div>
 	</div>

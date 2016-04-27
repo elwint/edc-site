@@ -1,9 +1,9 @@
 <?php
 
-class Cups extends Base {
+class Cups extends PageBase {
 
 	function show() {
-		View::init('partials/header', 'partials/footer')->set('username', Session::get('username'))
+		$this->view
 			->set('title', 'Cups')
 			->make('cups');
 	}

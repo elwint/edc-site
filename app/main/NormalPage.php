@@ -1,6 +1,6 @@
 <?php
 
-class NormalPage extends Base {
+class NormalPage extends PageBase {
 
 	function show($params) {
 		if (!isset($params['page'])) {
@@ -9,19 +9,19 @@ class NormalPage extends Base {
 		$page = $this->db->selectBy("pages", array("linktitle" => $params['page']));
 
 		if (!empty($page)) {
-			View::init('partials/header', 'partials/footer')->set('username', Session::get('username'))
+			$this->view
 			->set('title', $page['title'])
 			->set('content', $page['content'])
 			->make('page');
 		} else {
 			$this->showNotFound();
-//			View::init('partials/header', 'partials/footer')->set('username', Session::get('username'))
-//			->makeStatic('404.html');
 		}
 	}
 
 	function showNotFound() {
 		header("HTTP/1.0 404 Not Found");
-		echo '404';
+		$this->view
+			->set('title', '404 Not Found')
+			->makeStatic('404.html');
 	}
 }

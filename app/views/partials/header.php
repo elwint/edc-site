@@ -93,8 +93,10 @@
 		</div>
 		<div class="menuheader">
 			<div class="search-container">
-				<input class="search" id="searchbox" type="search" placeholder="Search">
-				<a onclick="document.getElementById('searchbox').focus();" class="searchbutton"><div style="-webkit-transform: rotate(-45deg); -moz-transform: rotate(-45deg); -o-transform: rotate(-45deg); -ms-transform: rotate(-45deg);">&#9906;</div></a>
+				<form action="/search" method="get">
+					<input class="search" id="searchbox" type="search" name="q" placeholder="Search">
+					<a onclick="document.getElementById('searchbox').focus();" class="searchbutton"><div style="-webkit-transform: rotate(-45deg); -moz-transform: rotate(-45deg); -o-transform: rotate(-45deg); -ms-transform: rotate(-45deg);">&#9906;</div></a>
+				</form>
 			</div>
 			<?php if ($this->isEmpty($this->username)) { ?>
 			<a href="#loginpopup" class="loginbutton">Log In</a>
@@ -113,7 +115,7 @@
 					<a href="/cups">Cups</a>
 				</li>
 				<li>
-					<a href="#">Donate</a>
+					<a href="/donate">Donate</a>
 				</li>
 				<li class="last">
 					<a href="/about-us">About us</a>

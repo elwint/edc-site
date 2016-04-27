@@ -6,11 +6,11 @@
 
 #sliderFrame {
 	position:relative;
-	width:742px;
+	width:740px;
 }
 
 #slider, #slider div.sliderInner {
-	width:742px;height:319px;/* Must be the same size as the slider images */
+	width:740px;height:320px;/* Must be the same size as the slider images */
 }
 
 #slider {
