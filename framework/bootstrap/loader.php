@@ -6,7 +6,7 @@
 
 define('__DIR__', dirname(dirname(__FILE__)));
 
-$handle = fopen("__DIR__ . '/../.env", "r");
+$handle = fopen(__DIR__ . "/../.env", "r");
 if ($handle) {
 	while (($line = fgets($handle)) !== false) {
 		$val = explode("=", preg_replace('/\s+/', '', $line));

@@ -100,6 +100,18 @@ class Database {
 	}
 
 	/*
+	 * Select join method
+	 */
+	public function selectJoin($table, $jointables=array('jointable' => 'condition=condition'), $columns = "*", $join="INNER", $fetchAll=true, $extra="", $extravalues=array()) {
+		$sqlextra = "";
+		foreach ($jointables as $jointable => $condition) {
+			$sqlextra .= $join . " JOIN " . $jointable . " ON " . $condition . " ";
+		}
+		$sqlextra .= $extra;
+		return $this->select($table, $columns, $fetchAll, $sqlextra, $extravalues);
+	}
+
+	/*
 	 * Select all
 	 */
 	public function selectAll($table, $fetch=true) {
@@ -110,9 +122,9 @@ class Database {
 	/*
 	 * Select by
 	 */
-	public function selectBy($table, $wherevalue, $fetch=true, $fetchall=false) {
-		$result = $this->query("SELECT * FROM {$table} WHERE ".key($wherevalue)."=:".key($wherevalue), $wherevalue);
-		return ($fetch ? $this->fetch($fetchall) : $result);
+	public function selectBy($table, $wherevalue, $fetchall=false) {
+		$result = $this->select($table, "*", $fetchall, "WHERE ".key($wherevalue)."=:".key($wherevalue), $wherevalue);
+		return $result;
 	}
 
 	/*

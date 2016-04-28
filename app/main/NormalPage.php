@@ -8,7 +8,7 @@ class NormalPage extends PageBase {
 		}
 		$page = $this->db->selectBy("pages", array("linktitle" => $params['page']));
 
-		if (!empty($page)) {
+		if ($page) {
 			$this->view
 			->set('title', $page['title'])
 			->set('content', $page['content'])

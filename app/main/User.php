@@ -11,7 +11,7 @@ class User extends Base {
     function login() {
 		if (isset($this->input['POST'])) {
 			$user = $this->getUserByUsername($this->input['POST']['Username']);
-			if (empty($user)) {
+			if (!$user) {
 				$this->popError('Invalid Credentials', 'loginpopup');
 				return;
 			}
@@ -87,13 +87,11 @@ class User extends Base {
 	}
 
 	private function getUserByUsername($username) {
-		$user = $this->db->selectBy('users', array("username" => $username));
-		return empty($user) ? false : $user;
+		return $this->db->selectBy('users', array("username" => $username));
 	}
 
 	private function getUserByEmail($email) {
-		$user = $this->db->selectBy('users', array("email" => $email));
-		return empty($user) ? false : $user;
+		return $this->db->selectBy('users', array("email" => $email));
 	}
 
 	private function updateUserByUsername($username, $values) {
