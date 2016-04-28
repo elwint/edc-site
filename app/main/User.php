@@ -31,6 +31,7 @@ class User extends Base {
 				Session::clear();
 				Session::regenerate();
 				Session::set('username', $user['username']);
+				Session::set('timezone', $user['timezone']);
 				$this->updateUserByUsername($user['username'], array('login_attempts' => 0));
 				Response::redirect($this->input['POST']['path']);
 			} else {
@@ -63,7 +64,7 @@ class User extends Base {
 					'username' => $this->input['POST']['Username'],
 					'email' => $this->input['POST']['Email'],
 					'password' => $this->generateHash($this->input['POST']['Password'], $this->input['POST']['Username']),
-					'date' => date("Y-m-d"),
+					'datetime' => $this->db->getGMTDateTime(),
 				);
 				if (strlen($data['password']) != 64)
 					ErrorHandler::makeError('Password can not be encrypted.');

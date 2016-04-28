@@ -79,14 +79,14 @@ class Database {
 	/*
 	 * Update method
 	 */
-	public function update($table, $values, $where="", $wherevalues=array()) {
+	public function update($table, $values, $where="", $wherearray=array()) {
 		$sql = "UPDATE {$table} SET ";
 		foreach ( array_keys ( $values ) as $column ) {
 			$sql .= "{$column}=:{$column},";
 		}
 		$sql [strlen ( $sql ) - 1] = ' ';
 		$sql .= $where;
-		$values = array_merge($values, $wherevalues);
+		$values = array_merge($values, $wherearray);
 		return $this->query($sql, $values);
 	}
 
@@ -122,24 +122,24 @@ class Database {
 	/*
 	 * Select by
 	 */
-	public function selectBy($table, $wherevalue, $fetchall=false) {
-		$result = $this->select($table, "*", $fetchall, "WHERE ".key($wherevalue)."=:".key($wherevalue), $wherevalue);
+	public function selectBy($table, $wherearray, $fetchall=false) {
+		$result = $this->select($table, "*", $fetchall, "WHERE ".key($wherearray)."=:".key($wherearray), $wherearray);
 		return $result;
 	}
 
 	/*
 	 * Update by
 	 */
-	public function updateBy($table, $values, $wherevalue) {
-		$result = $this->update($table, $values, "WHERE ".key($wherevalue)."=:".key($wherevalue), $wherevalue);
+	public function updateBy($table, $values, $wherearray) {
+		$result = $this->update($table, $values, "WHERE ".key($wherearray)."=:".key($wherearray), $wherearray);
 		return $result;
 	}
 
 	/*
 	 * Delete by
 	 */
-	public function deleteBy($table, $wherevalue) {
-		return $this->query("DELETE FROM {$table} WHERE ".key($wherevalue)."=:".key($wherevalue), $wherevalue);
+	public function deleteBy($table, $wherearray) {
+		return $this->query("DELETE FROM {$table} WHERE ".key($wherearray)."=:".key($wherearray), $wherearray);
 	}
 
 	/*
@@ -171,5 +171,16 @@ class Database {
 			// No records found
 			return false;
 		}
+	}
+
+	public function getGMTDateTime($format="Y-m-d H:i:s") {
+		return gmdate($format);
+	}
+
+	public function getDateTime($gmt, $timezone, $format="Y-m-d H:i:s") {
+		$dt = new DateTime($gmt." +00");
+		$tz = new DateTimeZone($timezone);
+		$dt->setTimezone($tz);
+		return $dt->format($format);
 	}
 }

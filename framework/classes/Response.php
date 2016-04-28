@@ -27,6 +27,7 @@ class Response {
 	 * JSON response to the browser, helpful for APIs
 	 */
 	public static function json($data) {
+		header('Content-Type: application/json');
 		echo json_encode($data);
 	}
 

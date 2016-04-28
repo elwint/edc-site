@@ -2,7 +2,7 @@
 <html>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="theme-color" content="#222222">
-	<title><?php $this->pr('title'); ?></title>
+	<title><?php $this->pr($this->title); ?></title>
 	<link rel="shortcut icon" href="/favicon.ico?v=2">
 	<link rel="stylesheet" href="/main.css" type="text/css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" type="text/css">
@@ -42,7 +42,7 @@
 				<?php } ?>
 				<input type="hidden" name="path" value="<?php echo strtok($_SERVER["REQUEST_URI"],'?'); ?>">
 				<?php if (!$this->isEmpty($this->poperror)) { ?>
-				<span class="alert"><?php $this->pr('poperror', 300); ?></span>
+				<span class="alert"><?php $this->pr($this->poperror, 300); ?></span>
 				<?php } ?>
 				<a class="link" href="#forgotpopup">Lost your password?</a>
 				<input type="submit" class="log-btn loginbutton" value="Log In">
@@ -67,7 +67,7 @@
 				</div>
 				<input type="hidden" name="path" value="<?php echo strtok($_SERVER["REQUEST_URI"],'?'); ?>">
 				<?php if (!$this->isEmpty($this->poperror)) { ?>
-				<span class="alert"><?php $this->pr('poperror', 300); ?></span>
+				<span class="alert"><?php $this->pr($this->poperror, 300); ?></span>
 				<?php } ?>
 				<input type="submit" class="log-btn loginbutton" value="Register">
 			</form>
@@ -102,7 +102,7 @@
 			<a href="#loginpopup" class="loginbutton">Log In</a>
 			<a href="#registerpopup" class="loginbutton">Register</a>
 			<?php } else { ?>
-			<a href="/account" class="loginbutton"><?php $this->pr('username'); ?></a>
+			<a href="/account" class="loginbutton"><?php $this->pr($this->username); ?></a>
 			<a href="/logout" class="loginbutton">Log Out</a>
 			<?php } ?>
 		</div>

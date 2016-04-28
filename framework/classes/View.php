@@ -80,11 +80,15 @@ class View
 			ErrorHandler::makeError("View '<b>{$viewMod}</b>' does not exist", $error_debug[1]['class'], $error_debug[1]['function']);
 	}
 
-	protected function pr($name, $maxLength=null) {
-		$val = $this->__get($name);
+	protected function pr($val, $maxLength=null, $echo=true) {
 		if (is_null($maxLength))
 			$maxLength = strlen($val);
-		echo substr(htmlspecialchars($val, ENT_QUOTES, 'UTF-8'), 0, $maxLength);
+		if ($echo) {
+			echo substr(htmlspecialchars($val, ENT_QUOTES, 'UTF-8'), 0, $maxLength);
+			return true;
+		} else {
+			return substr(htmlspecialchars($val, ENT_QUOTES, 'UTF-8'), 0, $maxLength);
+		}
 	}
 
 	protected function isEmpty($var) {

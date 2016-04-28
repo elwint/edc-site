@@ -1,20 +1,22 @@
 <div id="left">
+	<?php if (!$this->isEmpty($this->sliders)) { ?>
 	<div class="module_slider">
 		<div id="sliderFrame">
 			<div id="slider">
-				<a href="#"><img src="/files/sliderimages/track_mp1.jpg" alt="First test"></a>
-				<a href="#"><img src="/files/sliderimages/wallpaper_grass.jpg" alt="Second test"></a>
-				<a href="#"><img src="/files/sliderimages/fb_cover.jpg" alt="Third test"></a>
+				<?php
+					foreach($this->sliders as $slider) {
+						echo '<a href="/p/'.$this->pr($slider['linktitle'],null,false).'"><img src="'.$this->pr($slider['sliderimage'],null,false).'" alt="'.$this->pr($slider['title'],null,false).'"></a>';
+					}
+				?>
 			</div>
 		</div>
 	</div>
 	<h3>Latest Post</h3>
+	<?php } ?>
 	<div class="module_main">
-		<h3>Welcome to our new website!</h3>
-		<span class="date_title">8-May-2015</span>
-		<p>We don't have any sponsors (yet).<br>
-			If you are interested in sponsoring, you can <a href="#">contact us here</a>.
-		</p>
+		<h3><?php $this->pr($this->post_title) ?></h3>
+		<span class="date_title"><?php $this->pr($this->post_date) ?></span>
+		<p><?php echo $this->post_content ?></p>
 	</div>
 </div>
 <div id="right">
@@ -22,6 +24,6 @@
 		$this->makeMod('side_mods/news');
 		$this->makeMod('side_mods/matches');
 		$this->makeMod('side_mods/results');
-		$this->makeMod('side_mods/banners');
+		$this->makeMod('side_mods/server_banner');
 	?>
 </div>

@@ -247,6 +247,26 @@ h5#logo span { color:#333; font:bold 10px/16px 'Open Sans', sans-serif; text-tra
 
 #footer a:hover { text-decoration:underline;}
 
+
+.footer_img {
+	opacity: 0.4;
+}
+
+.footer_img img {
+	display: inline-block;
+	width: 22px;
+	height: 22px;
+	vertical-align: bottom;
+}
+
+.footer_img:hover {
+	-webkit-transition: opacity 0.4s ease;
+	-moz-transition: opacity 0.4s ease;
+	-o-transition: opacity 0.4s ease;
+	transition: opacity 0.4s ease;
+	opacity: 1.0;
+}
+
 .menuheader {
 	position: absolute;
 	right: 0;

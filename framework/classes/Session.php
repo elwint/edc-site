@@ -74,6 +74,8 @@ class Session {
 	 */
 	public static function clear() {
 		session_unset();
+		session_destroy();
+		session_start();
 	}
 
 	/**

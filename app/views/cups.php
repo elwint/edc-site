@@ -1,22 +1,22 @@
 <div id="left">
+	<?php if (is_array($this->cups)) { foreach ($this->cups as $cup) { ?>
 	<div class="module_cup">
 		<div class="wrapper">
-			<a href="#"><img src="/files/sliderimages/track_mp1.jpg" alt="GrassTech Cup 2015"></a>
-			<div class="desc"><p>GrassTech Cup 2015</p></div>
+			<a href="/p/<?php $this->pr($cup['linktitle']) ?>"><img src="<?php $this->pr($cup['sliderimage']) ?>" alt="<?php $this->pr($cup['title']) ?>"></a>
+			<div class="desc"><p><?php $this->pr($cup['title']) ?></p></div>
 		</div>
 	</div>
-	<div class="module_cup">
-		<div class="wrapper">
-			<a href="#"><img src="/files/sliderimages/wallpaper_grass.jpg" alt="Example cup"></a>
-			<div class="desc"><p>Another cup!</p></div>
-		</div>
+	<?php }} else { ?>
+	<div class="module_main">
+		<p>No cups found =/</p>
 	</div>
+	<?php } ?>
 </div>
 <div id="right">
 	<?php
 		$this->makeMod('side_mods/news');
 		$this->makeMod('side_mods/matches');
 		$this->makeMod('side_mods/results');
-		$this->makeMod('side_mods/banners');
+		$this->makeMod('side_mods/server_banner');
 	?>
 </div>
