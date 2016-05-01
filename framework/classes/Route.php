@@ -14,9 +14,18 @@ class Route {
 	 * Set 404 not found controller and function
 	 *
 	 */
-	public static function notFound($controller, $function) {
+	public static function not_found($controller, $function) {
 		$GLOBALS['404']['controller'] = $controller;
 		$GLOBALS['404']['function'] = $function;
+	}
+
+	public static function forbidden($controller, $function) {
+		$GLOBALS['403']['controller'] = $controller;
+		$GLOBALS['403']['function'] = $function;
+	}
+
+	public static function routeCode($http_code = "404") {
+		Route::createObject($GLOBALS[$http_code]['controller'], $GLOBALS[$http_code]['function'], '');
 	}
 
 	/**
@@ -127,10 +136,10 @@ class Route {
 				header("HTTP/1.0 404 Not Found");
 				echo "<h1>404 Not Found</h1>";
 				echo "The page that you have requested could not be found.";
+				die();
 			} else {
-				Route::createObject($GLOBALS['404']['controller'], $GLOBALS['404']['function'], $params);
+				Route::routeCode('404');
 			}
-			die();
 		}
 
 		// hooray, route has been found lets load the controller.

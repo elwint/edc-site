@@ -23,5 +23,13 @@ class NormalPage extends PageBase {
 		$this->view
 			->set('title', '404 Not Found')
 			->makeStatic('404.html');
+		die();
+	}
+
+	function showForbidden() {
+		header("HTTP/1.0 403 Forbidden");
+		echo "<h1>Forbidden</h1>";
+		echo "You don't have permission to access the requested object. It is either read-protected or not readable by the server.";
+		die();
 	}
 }

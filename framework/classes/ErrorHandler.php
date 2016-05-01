@@ -68,11 +68,15 @@ class ErrorHandler
 
 		ob_end_clean();
 		header("HTTP/1.0 500 Internal Server Error");
-		View::init()
-			->set('error', $error)
-			->set('class', $class)
-			->set('function', $function)
-			->make('full_pages/error');
+		try {
+			View::init()
+				->set('error', $error)
+				->set('class', $class)
+				->set('function', $function)
+				->make('full_pages/error');
+		} catch (Exception $e) {
+			echo 'A server error occurred. Please contact us to inform us of the time the error occurred, and anything you might have done that may caused the error.';
+		}
 		die();
 	}
 }

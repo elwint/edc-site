@@ -1,6 +1,7 @@
 <?php
 
-Route::notFound('NormalPage', 'showNotFound');
+Route::not_found('NormalPage', 'showNotFound');
+Route::forbidden('NormalPage', 'showForbidden');
 
 Route::post('/register', 'User@register');
 Route::post('/login', 'User@login');

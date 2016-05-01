@@ -14,7 +14,7 @@ if ($handle) {
 			if ($val[1] == "{EMPTY}") {
 				define(str_replace( array( "'",'"' ),'',$val[0] ), "");
 			} else {
-				define(str_replace( array( "'",'"' ),'',$val[0] ), str_replace( array( "'",'"' ),'',$val[1] ));
+				define(str_replace( array( "'",'"' ),'',$val[0] ), str_replace( array( "'",'"',"[","]" ),'',$val[1] ));
 			}
 		}
 	}
