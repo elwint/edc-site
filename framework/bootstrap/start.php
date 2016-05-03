@@ -7,7 +7,7 @@ require_once('loader.php');
 date_default_timezone_set(TIMEZONE);
 
 // Define client ip
-define('CLIENT_IP', $_SERVER['REMOTE_ADDR']);
+define('CLIENT_IP', (isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"]));
 
 // Maintenance mode
 if (MAINTENANCE_MODE == "1") {
