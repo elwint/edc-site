@@ -23,6 +23,7 @@ class NormalPage extends PageBase {
 		$this->view
 			->set('title', '404 Not Found')
 			->makeStatic('404.html');
+		die();
 	}
 
 	function showForbidden() {
