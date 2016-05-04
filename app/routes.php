@@ -9,6 +9,9 @@ Route::get('/logout', 'User@logout');
 
 Route::get('/', 'Home@show');
 Route::get('/cups', 'Cups@show');
+Route::get('/p/:linktitle', 'Post@show');
+Route::get('/results/:linktitle', 'Result@show');
 
 Route::get('/api/setserver/:bool', 'Api@setServer');
+
 Route::get('/:page', 'NormalPage@show');
