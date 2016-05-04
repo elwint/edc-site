@@ -8,6 +8,7 @@ class PageBase extends Base {
 		$this->view = View::init('partials/header', 'partials/footer')
 			->set('title', 'Untitled')
 			->set('username', Session::get('username'))
+			->set('msg_box', false)
 			->set('recaptchakey', RECAPTCHA_SITEKEY)
 			->set('recaptcha', false)
 			->set('slider', false)

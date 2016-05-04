@@ -79,14 +79,14 @@ class Database {
 	/*
 	 * Update method
 	 */
-	public function update($table, $values, $where="", $wherearray=array()) {
+	public function update($table, $values, $extra="", $extravalues=array()) {
 		$sql = "UPDATE {$table} SET ";
 		foreach ( array_keys ( $values ) as $column ) {
 			$sql .= "{$column}=:{$column},";
 		}
 		$sql [strlen ( $sql ) - 1] = ' ';
-		$sql .= $where;
-		$values = array_merge($values, $wherearray);
+		$sql .= $extra;
+		$values = array_merge($values, $extravalues);
 		return $this->query($sql, $values);
 	}
 
@@ -97,6 +97,13 @@ class Database {
 		$sql = "SELECT {$columns} FROM {$table} {$extra}";
 		$this->query($sql, $extravalues);
 		return $this->fetch($fetchAll);
+	}
+
+	/*
+	 * Delete method
+	 */
+	public function delete($table, $extra="", $extravalues=array()) {
+		return $this->query("DELETE FROM {$table} ".$extra, $extravalues);
 	}
 
 	/*
@@ -139,7 +146,7 @@ class Database {
 	 * Delete by
 	 */
 	public function deleteBy($table, $wherearray) {
-		return $this->query("DELETE FROM {$table} WHERE ".key($wherearray)."=:".key($wherearray), $wherearray);
+		return $this->delete($table, "WHERE ".key($wherearray)."=:".key($wherearray), $wherearray);
 	}
 
 	/*

@@ -15,7 +15,7 @@
 	<?php } ?>
 	<div class="module_main">
 		<h3><?php $this->pr($this->post_title) ?></h3>
-		<span class="date_title"><?php $this->pr($this->post_date) ?></span>
+		<span class="date_title">Posted on: <?php $this->pr($this->post_date) ?></span>
 		<p><?php echo $this->post_content ?></p>
 	</div>
 </div>

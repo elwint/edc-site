@@ -360,6 +360,24 @@ h5#logo span { color:#333; font:bold 10px/16px 'Open Sans', sans-serif; text-tra
 	z-index: 100;
 }
 
+.sign {
+	position: absolute;
+	top: 20px;
+	right: 30px;
+	background-color: darkgreen;
+}
+
+.signlight {
+	position: absolute;
+	top: 20px;
+	right: 30px;
+	background-color: lightgrey;
+}
+
+.sign:hover {
+	background-color: lightgreen;
+}
+
 /* superfish */
 #topmenu {
 	background:url(images/menu_bg.gif) left top repeat-x;

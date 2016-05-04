@@ -10,7 +10,7 @@ class Home extends PageBase {
 			->set('slider', true)
 
 			->set('post_title', $latestpost['title'])
-			->set('post_date', $this->db->getDateTime($latestpost['datetime'], $this->getTimeZone(), "j-M-Y"))
+			->set('post_date', $this->db->getDateTime($latestpost['datetime'], $this->getTimeZone(), "j F Y"))
 			->set('post_content', $latestpost['content'])
 			->set('sliders', $sliders);
 

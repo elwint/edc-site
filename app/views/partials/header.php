@@ -18,11 +18,14 @@
 	<script type="text/javascript">
 		var CaptchaCallback = function(){
 			<?php if ($this->attempts) { ?>
-			grecaptcha.render('recaptchaLogin', {'sitekey' : '<?php echo $this->recaptchakey; ?>'});
+			grecaptcha.render('recaptchaLogin', {'sitekey' : '<?php $this->pr($this->recaptchakey); ?>'});
 			<?php } ?>
-			grecaptcha.render('recaptchaRegister', {'sitekey' : '<?php echo $this->recaptchakey; ?>'});
+			grecaptcha.render('recaptchaRegister', {'sitekey' : '<?php $this->pr($this->recaptchakey); ?>'});
 		};
 	</script>
+	<?php } ?>
+	<?php if ($this->msg_box) { ?>
+		<script type="text/javascript">alert('<?php $this->pr($this->msg_box); ?>')</script>
 	<?php } ?>
 <body>
 <?php if ($this->isEmpty($this->username)) { ?>
