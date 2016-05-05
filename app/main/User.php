@@ -154,7 +154,7 @@ class User extends PageBase {
 				View::init()
 					->set('username', $data['username'])
 					->set('password', $pw)
-					->sendMail('emails/register', $data['email']);
+					->sendMail('EDC | Account Registration', 'emails/register', array($data['email']));
 				Response::redirect('/registration-success');
 			} else {
 				$this->popError($poperror, 'registerpopup');

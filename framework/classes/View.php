@@ -74,7 +74,7 @@ class View
 					ErrorHandler::makeError("View '<b>{$this->footer}</b>' does not exist", $error_debug[1]['class'], $error_debug[1]['function']);
 	}
 
-	public function sendMail($view, $addr=array()) {
+	public function sendMail($subject, $view, $addr=array()) {
 		$error_debug = debug_backtrace();
 		$email_content = "";
 
@@ -98,10 +98,37 @@ class View
 		if (empty($addr)) {
 			ErrorHandler::makeError("Can't send email, no addresses defined", $error_debug[1]['class'], $error_debug[1]['function']);
 		}
-		$to      = implode(", ", $addr);
-		$subject = 'EDC | Account Registration';
-		$headers = 'From:' . EMAIL_NOREPLY . "\r\n";
-		mail($to, $subject, $email_content, $headers);
+		foreach ($addr as $a) {
+			$send_data = array(
+				'from' => EMAIL_NOREPLY,
+				'subject' => $subject,
+				'to' => $a,
+				'text' => str_ireplace(array("<br />","<br>","<br/>"), "\r\n", preg_replace('/\s+/', ' ', trim($email_content))));
+			$this->sendMailgun($send_data);
+		}
+
+
+	}
+
+	private function sendMailgun($data)
+	{
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, (EMAIL_SECURE == "false") ? false : true);
+		curl_setopt($ch, CURLOPT_USERPWD, 'api:' . EMAIL_MG_KEY);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+		curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v3/' . EMAIL_MG_DOMAIN . '/messages');
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		$r = curl_exec($ch);
+		if ($r === false)
+			throw new Exception(curl_error($ch), curl_errno($ch));
+
+		$info = curl_getinfo($ch);
+		curl_close($ch);
+
+		if ($info['http_code'] != 200)
+			ErrorHandler::makeError('Could not send email request. ' . $r);
 	}
 
 	private function return_output($file){

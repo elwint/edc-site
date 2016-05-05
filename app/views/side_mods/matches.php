@@ -5,7 +5,7 @@
 		foreach ($this->side_matches as $date => $matches) {
 			echo '<p><b>'.$this->pr($date, null, false).'</b><br>';
 			foreach ($matches as $p) {
-				echo $this->pr($p['time'], null, false) . ': <a href="/p/' . $this->pr($p['linktitle'], null, false) . '" style="display:inline;">' . $this->pr($p['title'], null, false) . '</a><br>';
+				echo "<span title='You can change the timezone in your account settings'>".$this->pr($p['time'], null, false).':</span> <a href="/p/' . $this->pr($p['linktitle'], null, false) . '" style="display:inline;">' . $this->pr($p['title'], null, false) . '</a><br>';
 			}
 			echo '</p>';
 		}
