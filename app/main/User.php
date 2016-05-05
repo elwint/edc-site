@@ -1,12 +1,93 @@
 <?php
 
-class User extends Base {
+class User extends PageBase {
 	private $rules = array(
 		'Username'  => 'required|min:5|max:30',
-		'Password'  => 'required|min:8',
 		'Email'     => 'required|email|max:50',
 		'g-recaptcha-response' => 'recaptcha',
 	);
+
+	function account($params) {
+		$username = Session::get('username');
+		if (empty($username)) {
+			$this->view
+				->set('title', 'Not Logged In')
+				->set('content', 'Please log in and try again.')
+				->make('page');
+			return;
+		}
+		$user = $this->getUserByUsername($username);
+
+		if (!empty($_POST)) {
+			if (isset($_POST['Email'])) {
+				$error = "";
+				//TODO: Proper e-mail already exists check
+//				if ($emailuser && $emailuser['email'] != $_POST['Email'])
+//					$error = "Email address already in use.";
+				if (empty($error)) {
+					if ($result = $this->dv->validateData($_POST, array('Email' => $this->rules['Email']))) {
+						$firstresult = reset($result);
+						$error = $firstresult['msg'];
+						$this->view->set('msg_box', $error);
+					} else {
+						if ($this->updateUserByUsername($username, array('email' => $_POST['Email'], 'timezone' => $_POST['Timezone'])) === false)
+							$this->view->set('msg_box', 'Invalid input.');
+						else
+							Session::set('timezone', $_POST['Timezone']);
+							$this->view->set('msg_box', 'Account updated succesfully!');
+					}
+				} else {
+					$this->view->set('msg_box', $error);
+				}
+			} elseif (isset($_POST['OldPassword'])) {
+				//TODO: From e-mail no old pw required
+				$error = "";
+				if ($this->generateHash($_POST['OldPassword'], $username) != $user['password'])
+					$error = "Old password wrong!";
+				if (empty($error)) {
+					if ($result = $this->dv->validateData($_POST, array('NewPassword' => 'required|min:8'))) {
+						$firstresult = reset($result);
+						$error = $firstresult['msg'];
+						$this->view->set('msg_box', $error);
+					} else {
+						if ($this->updateUserByUsername($username, array('password' => $this->generateHash($_POST['NewPassword'], $username))) === false)
+							$this->view->set('msg_box', 'Invalid input.');
+						else
+							Session::set('timezone', $_POST['Timezone']);
+						$this->view->set('msg_box', 'Account updated succesfully!');
+					}
+				} else {
+					$this->view->set('msg_box', $error);
+				}
+			}
+		}
+
+		if (!isset($params['page'])) {
+			$this->view
+				->set('title', 'Account Settings')
+				->set('email', $user['email'])
+				->set('user_tz', $user['timezone'])
+				->set('timezones', DateTimeZone::listIdentifiers())
+				->make('account/main');
+		} else {
+			switch ($params['page']) {
+				case 'temppw':
+					$this->view
+						->set('title', 'Change Temporary Password')
+						->set('oldreq', true)
+						->make('account/password');
+					break;
+				case 'password':
+					$this->view
+						->set('title', 'Change Password')
+						->set('oldreq', true)
+						->make('account/password');
+					break;
+				default:
+					Route::routeCode("404");
+			}
+		}
+	}
 
     function login() {
 		if (isset($this->input['POST'])) {
@@ -60,17 +141,21 @@ class User extends Base {
 			elseif ($this->getUserByEmail($this->input['POST']['Email']))
 				$poperror = "Email address already in use.";
 			if (empty($poperror)) {
+				$pw = substr(str_shuffle(str_repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 5)), 0, 5);
 				$data = array(
 					'username' => $this->input['POST']['Username'],
 					'email' => $this->input['POST']['Email'],
-					'password' => $this->generateHash($this->input['POST']['Password'], $this->input['POST']['Username']),
+					'password' => $this->generateHash($pw, $this->input['POST']['Username']),
 					'datetime' => $this->db->getGMTDateTime(),
 				);
-				if (strlen($data['password']) != 64)
-					ErrorHandler::makeError('Password can not be encrypted.');
 				if (!$this->db->insert("users", $data))
 					$this->popError('Invalid Input', 'registerpopup');
-				Response::redirect('/validate-email');
+
+				View::init()
+					->set('username', $data['username'])
+					->set('password', $pw)
+					->sendMail('emails/register', $data['email']);
+				Response::redirect('/registration-success');
 			} else {
 				$this->popError($poperror, 'registerpopup');
 			}
@@ -84,7 +169,10 @@ class User extends Base {
 	}
 
 	private function generateHash($input, $inputextra) {
-		return hash('sha256', (SALT_EXTRA.$input.substr($inputextra, (int)SALT_START, 3)));
+		$hash = hash('sha256', (SALT_EXTRA.$input.substr($inputextra, (int)SALT_START, 3)));
+		if (strlen($hash) != 64)
+			ErrorHandler::makeError('Password can not be encrypted.');
+		return $hash;
 	}
 
 	private function getUserByUsername($username) {

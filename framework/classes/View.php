@@ -74,6 +74,42 @@ class View
 					ErrorHandler::makeError("View '<b>{$this->footer}</b>' does not exist", $error_debug[1]['class'], $error_debug[1]['function']);
 	}
 
+	public function sendMail($view, $addr=array()) {
+		$error_debug = debug_backtrace();
+		$email_content = "";
+
+		if($this->header != null)
+			if (! file_exists(APP_PATH . 'views/' . $this->header . '.php'))
+				ErrorHandler::makeError("View '<b>{$this->header}</b>' does not exist", $error_debug[1]['class'], $error_debug[1]['function']);
+			else
+				$email_content .= $this->return_output(APP_PATH . 'views/' . $this->header . '.php');
+
+		if (! file_exists(APP_PATH . 'views/' . $view . '.php'))
+			ErrorHandler::makeError("View '<b>{$view}</b>' does not exist", $error_debug[1]['class'], $error_debug[1]['function']);
+		else
+			$email_content .= $this->return_output(APP_PATH . 'views/' . $view . '.php');
+
+		if($this->footer != null)
+			if (! file_exists(APP_PATH . 'views/' . $this->footer . '.php'))
+				ErrorHandler::makeError("View '<b>{$this->footer}</b>' does not exist", $error_debug[1]['class'], $error_debug[1]['function']);
+			else
+				$email_content .= $this->return_output(APP_PATH . 'views/' . $this->footer . '.php');
+
+		if (empty($addr)) {
+			ErrorHandler::makeError("Can't send email, no addresses defined", $error_debug[1]['class'], $error_debug[1]['function']);
+		}
+		$to      = implode(", ", $addr);
+		$subject = 'EDC | Account Registration';
+		$headers = 'From:' . EMAIL_NOREPLY . "\r\n";
+		mail($to, $subject, $email_content, $headers);
+	}
+
+	private function return_output($file){
+		ob_start();
+		include $file;
+		return ob_get_clean();
+	}
+
 	protected function makeMod($viewMod) {
 		$error_debug = debug_backtrace();
 		if (! @include(APP_PATH . 'views/' . $viewMod . '.php'))

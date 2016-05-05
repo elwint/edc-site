@@ -102,7 +102,7 @@ h5#logo span { color:#333; font:bold 10px/16px 'Open Sans', sans-serif; text-tra
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#df0609', endColorstr='#960a0c',GradientType=0 );
 }
 
-.module_main p {
+.module_main p, .module_main form {
 	padding-top: 20px;
 }
 

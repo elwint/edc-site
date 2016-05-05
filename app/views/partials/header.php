@@ -60,10 +60,10 @@
 					<input type="text" class="form-control" placeholder="Username" name="Username" required>
 				</div>
 				<div class="form-group">
-					<input type="password" class="form-control" placeholder="Password" name="Password" required>
+					<input type="email" class="form-control" placeholder="Email" name="Email" required>
 				</div>
 				<div class="form-group">
-					<input type="email" class="form-control" placeholder="Email" name="Email" required>
+					Note: A password will be e-mailed to you.
 				</div>
 				<div class="form-group">
 					<div id="recaptchaRegister"></div>
