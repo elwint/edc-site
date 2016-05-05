@@ -29,9 +29,9 @@ class User extends PageBase {
 					if (is_array($parts)) {
 						foreach ($parts as $part) {
 							if (isset($_POST[$part['post_id']]) && $_POST[$part['post_id']] == "1")
-								$result = $this->db->updateBy('participants', array('notify' => 1), array('post_id' => $part['post_id'], 'user_id' => $user['id']));
+								$result = $this->db->update('participants', array('notify' => 1), "WHERE post_id=:post_id AND user_id=:user_id", array('post_id' => $part['post_id'], 'user_id' => $user['id']));
 							else
-								$result = $this->db->updateBy('participants', array('notify' => 0), array('post_id' => $part['post_id'], 'user_id' => $user['id']));
+								$result = $this->db->update('participants', array('notify' => 0), "WHERE post_id=:post_id AND user_id=:user_id", array('post_id' => $part['post_id'], 'user_id' => $user['id']));
 							if ($result === false) {
 								$this->view->set('msg_box', 'Invalid input.');
 								$error = true;
