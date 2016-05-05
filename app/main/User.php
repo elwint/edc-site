@@ -161,7 +161,7 @@ class User extends PageBase {
 				if (!$this->db->insert("users", $data))
 					$this->popError('Invalid Input', 'registerpopup');
 
-				View::init()
+				View::init(null, 'emails/footer')
 					->set('username', $data['username'])
 					->set('password', $pw)
 					->sendMail('EDC | Account Registration', 'emails/register', array($data['email']));
