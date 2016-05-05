@@ -7,6 +7,7 @@
 		<?php } ?>
 		<label for="newpassword">New password:</label>
 		<input type="password" name="NewPassword" id="newpassword" required><br>
-		<p><input type="submit" class="loginbutton" value="Update"></p>
+		<p>Note: Your new password must be at least 8 characters long.</p>
+		<input type="submit" class="loginbutton" value="Update"><a href="/account" class="loginbutton">Cancel</a>
 	</form>
 </div>

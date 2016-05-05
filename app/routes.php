@@ -9,6 +9,7 @@ Route::get('/logout', 'User@logout');
 Route::get('/account', 'User@account');
 Route::get('/account/:page', 'User@account');
 Route::post('/account', 'User@account');
+Route::post('/account/:page', 'User@account');
 
 Route::get('/', 'Home@show');
 Route::get('/cups', 'Cups@show');

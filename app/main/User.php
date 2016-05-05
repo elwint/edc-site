@@ -19,25 +19,29 @@ class User extends PageBase {
 		$user = $this->getUserByUsername($username);
 
 		if (!empty($_POST)) {
-			if (isset($_POST['Email'])) {
-				$error = "";
-				//TODO: Proper e-mail already exists check
-//				if ($emailuser && $emailuser['email'] != $_POST['Email'])
-//					$error = "Email address already in use.";
-				if (empty($error)) {
-					if ($result = $this->dv->validateData($_POST, array('Email' => $this->rules['Email']))) {
-						$firstresult = reset($result);
-						$error = $firstresult['msg'];
-						$this->view->set('msg_box', $error);
-					} else {
-						if ($this->updateUserByUsername($username, array('email' => $_POST['Email'], 'timezone' => $_POST['Timezone'])) === false)
-							$this->view->set('msg_box', 'Invalid input.');
-						else
-							Session::set('timezone', $_POST['Timezone']);
-							$this->view->set('msg_box', 'Account updated succesfully!');
-					}
+			if (isset($_POST['Timezone'])) {
+				$error = false;
+				if ($this->updateUserByUsername($username, array('timezone' => $_POST['Timezone'])) === false) {
+					$this->view->set('msg_box', 'Invalid input.');
+					$error = true;
 				} else {
-					$this->view->set('msg_box', $error);
+					$parts = $this->db->selectBy('participants', array('user_id' => $user['id']), true);
+					if (is_array($parts)) {
+						foreach ($parts as $part) {
+							if (isset($_POST[$part['post_id']]) && $_POST[$part['post_id']] == "1")
+								$result = $this->db->updateBy('participants', array('notify' => 1), array('post_id' => $part['post_id']));
+							else
+								$result = $this->db->updateBy('participants', array('notify' => 0), array('post_id' => $part['post_id']));
+							if ($result === false) {
+								$this->view->set('msg_box', 'Invalid input.');
+								$error = true;
+								break;
+							}
+						}
+					}
+				}
+				if (!$error) {
+					Session::set('timezone', $_POST['Timezone']);
 				}
 			} elseif (isset($_POST['OldPassword'])) {
 				//TODO: From e-mail no old pw required
@@ -53,8 +57,7 @@ class User extends PageBase {
 						if ($this->updateUserByUsername($username, array('password' => $this->generateHash($_POST['NewPassword'], $username))) === false)
 							$this->view->set('msg_box', 'Invalid input.');
 						else
-							Session::set('timezone', $_POST['Timezone']);
-						$this->view->set('msg_box', 'Account updated succesfully!');
+							$this->view->set('msg_box', 'Password changed succesfully!');
 					}
 				} else {
 					$this->view->set('msg_box', $error);
@@ -63,10 +66,12 @@ class User extends PageBase {
 		}
 
 		if (!isset($params['page'])) {
+			$cups = $this->getUserCups($username, 'participants.notify,posts.id,posts.title');
 			$this->view
 				->set('title', 'Account Settings')
 				->set('email', $user['email'])
-				->set('user_tz', $user['timezone'])
+				->set('cups', $cups)
+				->set('user_tz', $this->getTimeZone())
 				->set('timezones', DateTimeZone::listIdentifiers())
 				->make('account/main');
 		} else {
@@ -82,6 +87,11 @@ class User extends PageBase {
 						->set('title', 'Change Password')
 						->set('oldreq', true)
 						->make('account/password');
+					break;
+				case 'delete':
+					$this->view
+						->set('title', 'Delete Account')
+						->make('account/delete');
 					break;
 				default:
 					Route::routeCode("404");
@@ -185,5 +195,9 @@ class User extends PageBase {
 
 	private function updateUserByUsername($username, $values) {
 		$this->db->updateBy('users', $values, array('username' => $username));
+	}
+
+	private function getUserCups($username, $columns="posts.*") {
+		return $this->db->selectJoin('participants', array('posts' => 'participants.post_id=posts.id', 'users' => 'participants.user_id=users.id'), $columns, 'INNER', true, 'WHERE users.username=:username ORDER BY posts.datetime DESC', array('username' => $username));
 	}
 }

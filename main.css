@@ -378,6 +378,17 @@ h5#logo span { color:#333; font:bold 10px/16px 'Open Sans', sans-serif; text-tra
 	background-color: lightgreen;
 }
 
+
+.delete {
+	color: white;
+	background-color: darkred;
+}
+
+.delete:hover {
+	color: white;
+	background-color: indianred;
+}
+
 /* superfish */
 #topmenu {
 	background:url(images/menu_bg.gif) left top repeat-x;
