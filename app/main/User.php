@@ -179,7 +179,7 @@ class User extends PageBase {
 	}
 
 	private function generateHash($input, $inputextra) {
-		$hash = hash('sha256', (SALT_EXTRA.$input.substr($inputextra, (int)SALT_START, 3)));
+		$hash = hash('sha256', (SALT_EXTRA.strtolower($input).substr(strtolower($inputextra), (int)SALT_START, 3)));
 		if (strlen($hash) != 64)
 			ErrorHandler::makeError('Password can not be encrypted.');
 		return $hash;
